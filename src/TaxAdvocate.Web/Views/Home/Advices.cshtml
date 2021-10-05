@@ -1,0 +1,34 @@
+﻿@model AdviceModel
+@using TaxAdvocate.Business.Model
+@{
+    ViewData["Title"] = "TaxAdvocate - Overview";
+}
+
+@using (Html.BeginForm("AdvicesPost", "Home"))
+{
+    <div>
+        <h1 class="display-4">TaxAdvocate - Advice Indicators</h1>
+        <b>Select from the available indicators in the dropdown below. Only clients matching advice criteria will be displayed</b>
+
+        @Html.DropDownListFor(x => x.AdviceId, new SelectList(Model.AdviceIndicators, "AdviceId", "DisplayName"), new { onchange = "this.form.submit();" })
+        @ViewBag.IndicatorDescription
+        <br/><br/>
+
+        <div>
+            @(Html.Grid((List<Client>)ViewBag.Clients)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.ClientId).Titled("Client Id");
+                    columns.Add(model => model.CurrentMutation.Year).Titled("Year");
+                    columns.Add(model => model.CurrentMutation.TotalCapital).Titled("Total Capital").Formatted("{0:C}");
+                    columns.Add(model => string.Join("<p style=\"margin-top: 20px;\">",
+                        model.ValidationResults.Select(r =>
+                            string.Join("<br/>", r.Messages)))).Titled("Validation Results").Encoded(false);
+                })
+                .Using(GridFilterMode.Header)
+                .Empty("No data found")
+                )
+        </div>
+    </div>
+
+}

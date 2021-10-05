@@ -1,0 +1,29 @@
+﻿@using TaxAdvocate.Business.Model
+@{
+    ViewData["Title"] = "TaxAdvocate - Overview";
+}
+
+<div>
+    <h1 class="display-4">TaxAdvocate - Overview</h1>
+    <h2>All clients, sorted by total capital</h2>
+    
+    <div>
+    @(Html.Grid((List<Client>)ViewBag.Clients)
+        .Build(columns =>
+        {
+            columns.Add(model => model.ClientId).Titled("Client Id");
+            columns.Add(model => model.CurrentMutation.Year).Titled("Year");
+            columns.Add(model => model.CurrentMutation.TotalCapital).Titled("Total Capital").Formatted("{0:C}");
+            columns.Add(model => model.CurrentMutation.Income).Titled("Income").Formatted("{0:C}");
+            columns.Add(model => model.CurrentMutation.BankBalanceNational).Titled("National Bank Balance").Formatted("{0:C}");
+            columns.Add(model => model.CurrentMutation.BankbalanceInternational).Titled("International Bank Balance").Formatted("{0:C}");
+            columns.Add(model => model.CurrentMutation.RealEstatePropertyValue).Titled("Real Estate Value").Formatted("{0:C}");
+        })
+        .Using(GridFilterMode.Header)
+        .Empty("No data found")
+        .Filterable()
+        .Sortable()
+        .Pageable()
+        )
+    </div>
+</div>

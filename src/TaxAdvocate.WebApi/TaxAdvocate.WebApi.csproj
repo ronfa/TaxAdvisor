@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaxAdvocate.Business\TaxAdvocate.Business.csproj" />
+    <ProjectReference Include="..\TaxAdvocate.Data\TaxAdvocate.Data.csproj" />
+  </ItemGroup>
+
+
+</Project>
